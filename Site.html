@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interactive Timelines</title>
-  <script type="text/javascript" nonce="3c13ea5893b6422c84c5803c614" src="//local.adguard.org?ts=1763872003066&amp;type=content-script&amp;dmn=btxt04a2bgp5bere.canva-hosted-embed.com&amp;url=https%3A%2F%2Fbtxt04a2bgp5bere.canva-hosted-embed.com%2Fcodelet%2FAAEAEGJ0eHQwNGEyYmdwNWJlcmUAAAAAAZq0LscMfqIFDPMpDVoO-1HuhdO2Pr6ryONOdlqkZ4oMfhqWBfE%2Findex.html&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="3c13ea5893b6422c84c5803c614" src="//local.adguard.org?ts=1763872003066&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script src="/_sdk/element_sdk.js"></script>
+  <script type="text/javascript" nonce="3c13ea5893b6422c84c5803c614" src="//local.adguard.org?ts=1763872003066&amp;type=content-script&amp;dmn=btxt6jawsvy2wsx9.canva-hosted-embed.com&amp;url=https%3A%2F%2Fbtxt6jawsvy2wsx9.canva-hosted-embed.com%2Fcodelet%2FAAEAEGJ0eHQ2amF3c3Z5MndzeDkAAAAAAZq0Mgd_UGEZk1XSl7EVhlRjSjZ4WGlxab19zFdW97q0M-CfrMQ%2Findex.html&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="3c13ea5893b6422c84c5803c614" src="//local.adguard.org?ts=1763872003066&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script src="/_sdk/element_sdk.js"></script>
   <style>
     body {
       box-sizing: border-box;
@@ -28,7 +28,7 @@
 
     .header h1 {
       font-size: 48px;
-      margin: 0;
+      margin: 0 0 20px 0;
       font-weight: 700;
       background: linear-gradient(90deg, #ffffff, #a8b8ff, #ffffff, #ffd4ff, #ffffff);
       background-size: 200% 100%;
@@ -37,6 +37,34 @@
       -webkit-text-fill-color: transparent;
       animation: titleFadeIn 1.2s ease-out, gradientShift 6s ease-in-out infinite 1.2s;
       filter: drop-shadow(0 2px 10px rgba(255,255,255,0.3));
+    }
+
+    .subtitle-banner {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+      padding: 12px 32px;
+      border-radius: 50px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      animation: bannerSlideIn 1s ease-out 0.3s both;
+    }
+
+    .banner-text {
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes bannerSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     @keyframes titleFadeIn {
@@ -229,6 +257,8 @@
  <body>
   <div class="header">
    <h1 id="pageTitle">☁️ From Atoms to Algorithms: A Journey Through the Clouds</h1>
+   <div class="subtitle-banner"><span class="banner-text">Cloud Engineer Professional Portfolio</span>
+   </div>
   </div>
   <div class="container" style="padding-top: 20px;"><!-- School Timeline -->
    <div class="timeline-section" data-section="school">
@@ -562,5 +592,5 @@
       observer.observe(item);
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a2e051923a95283',t:'MTc2Mzg3MzE1Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a2e0a4d25b15283',t:'MTc2Mzg3MzM2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
