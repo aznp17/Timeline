@@ -3,287 +3,267 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Timelines</title>
-  <script type="text/javascript" nonce="3c13ea5893b6422c84c5803c614" src="//local.adguard.org?ts=1763872003066&amp;type=content-script&amp;dmn=btxtcaex2cp8d0af.canva-hosted-embed.com&amp;url=https%3A%2F%2Fbtxtcaex2cp8d0af.canva-hosted-embed.com%2Fcodelet%2FAAEAEGJ0eHRjYWV4MmNwOGQwYWYAAAAAAZq0NOUVj1yk3-2RXz8whCD-BxhxjzX-b-Z3pZG207F50jKCzGc%2Findex.html&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="3c13ea5893b6422c84c5803c614" src="//local.adguard.org?ts=1763872003066&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script src="/_sdk/element_sdk.js"></script>
+  <title>Interactive Timeline</title>
+  <script type="text/javascript" nonce="7804fdb381064683aa81ba0ccfd" src="//local.adguard.org?ts=1763961457075&amp;type=content-script&amp;dmn=bv0eqft833e2jdtg.canva-hosted-embed.com&amp;url=https%3A%2F%2Fbv0eqft833e2jdtg.canva-hosted-embed.com%2Fcodelet%2FAAEAEGJ2MGVxZnQ4MzNlMmpkdGcAAAAAAZq5en7uVNaG7WyIgYZsnqIy9FYo2dtgfzap3b4tGr0mAW0Ib9Q%2Findex.html&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-dnt"></script><script type="text/javascript" nonce="7804fdb381064683aa81ba0ccfd" src="//local.adguard.org?ts=1763961457075&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script><script src="/_sdk/element_sdk.js"></script>
   <style>
-    /* ===== GLOBAL STYLES ===== */
-    /* Reset and base body styling with gradient background */
     body {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
       min-height: 100%;
-      overflow-x: hidden;
+      width: 100%;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    /* ===== HEADER SECTION ===== */
-    /* Main header container at the top of the page */
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
     .header {
       text-align: center;
-      padding: 60px 20px 40px;
-      color: white;
+      margin-bottom: 60px;
     }
 
-    /* Main title with animated gradient text effect */
-    .header h1 {
+    .main-title {
       font-size: 48px;
-      margin: 0 0 20px 0;
       font-weight: 700;
-      background: linear-gradient(90deg, #ffffff, #a8b8ff, #ffffff, #ffd4ff, #ffffff);
-      background-size: 200% 100%;
+      background: linear-gradient(135deg, #ffffff 0%, #a8d5ff 50%, #4a9eff 100%);
       -webkit-background-clip: text;
-      background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: titleFadeIn 1.2s ease-out, gradientShift 6s ease-in-out infinite 1.2s;
-      filter: drop-shadow(0 2px 10px rgba(255,255,255,0.3));
+      background-clip: text;
+      margin: 0 0 16px 0;
+      text-shadow: none;
+      filter: drop-shadow(0 2px 8px rgba(168, 213, 255, 0.4));
     }
 
-    /* Mini banner below the main title */
-    .subtitle-banner {
-      display: inline-block;
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
-      padding: 12px 32px;
-      border-radius: 50px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      animation: bannerSlideIn 1s ease-out 0.3s both;
-    }
-
-    /* Text styling inside the banner */
-    .banner-text {
-      color: white;
+    .header-summary {
       font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    /* ===== ANIMATIONS ===== */
-    /* Banner slide-in animation from bottom */
-    @keyframes bannerSlideIn {
-      0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.9);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+    .timelines-wrapper {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+      width: 100%;
     }
 
-    /* Title fade-in animation from top */
-    @keyframes titleFadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(-30px) scale(0.95);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+    .section {
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      margin-bottom: 0;
+      box-shadow: none;
     }
 
-    /* Continuous gradient shifting animation for title */
-    @keyframes gradientShift {
-      0%, 100% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-    }
-
-    /* ===== MAIN CONTAINER ===== */
-    /* Three-column layout container for timeline sections */
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 20px 0;
-      display: flex;
-      gap: 40px;
-      align-items: flex-start;
-    }
-
-    /* ===== TIMELINE SECTION STYLES ===== */
-    /* Individual timeline column (School, Work, Certificates) */
-    .timeline-section {
-      flex: 1;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    /* Visible state when section scrolls into view */
-    .timeline-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Section header container */
-    .timeline-header {
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 24px 0;
       text-align: center;
-      margin-bottom: 30px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    /* Section title styling (e.g., "🎓 School") */
-    .timeline-header h2 {
-      font-size: 28px;
-      color: white;
-      margin: 0;
-      font-weight: 600;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    .section:nth-child(1) .section-title {
+      color: #a8d5ff;
     }
 
-    /* ===== TIMELINE VERTICAL LINE ===== */
-    /* Container for timeline items with left padding for the line */
+    .section:nth-child(2) .section-title {
+      color: #ffd4a8;
+    }
+
+    .section:nth-child(3) .section-title {
+      color: #c5a8ff;
+    }
+
     .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
       position: relative;
-      padding-left: 50px;
+      padding-left: 40px;
     }
 
-    /* Vertical timeline line on the left side */
     .timeline::before {
       content: '';
       position: absolute;
-      left: 20px;
+      left: 12px;
       top: 0;
       bottom: 0;
       width: 3px;
-      background: rgba(255,255,255,0.3);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.6) 100%);
     }
 
-    /* ===== TIMELINE ITEMS (CARDS) ===== */
-    /* Individual timeline entry with animation */
     .timeline-item {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
       position: relative;
-      opacity: 0;
-      transform: translateX(-30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      overflow: hidden;
+      width: 100%;
+      margin: 0 auto;
     }
 
-    /* Visible state when item scrolls into view */
-    .timeline-item.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .timeline-item[data-year] .timeline-content {
-      transform-origin: left center;
-    }
-
-    /* Timeline dot marker on the vertical line */
     .timeline-item::before {
       content: '';
       position: absolute;
-      left: -38px;
-      top: 8px;
+      top: 50%;
+      left: -34px;
       width: 16px;
       height: 16px;
-      background: white;
-      border: 3px solid #667eea;
       border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 1;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
+      background: #ffffff;
+      border: 4px solid rgba(168, 213, 255, 1);
+      box-shadow: 0 0 0 6px rgba(168, 213, 255, 0.2), 0 0 20px rgba(168, 213, 255, 0.4);
+      z-index: 10;
+      transition: all 0.4s ease;
+      transform: translateY(-50%);
     }
 
-    /* Dot grows when hovered */
-    .timeline-item:hover::before {
-      transform: scale(1.4);
-      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.5);
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -26px;
+      width: 26px;
+      height: 2px;
+      background: linear-gradient(270deg, rgba(168, 213, 255, 0.6), rgba(168, 213, 255, 0.2));
+      transition: all 0.4s ease;
+      transform: translateY(-50%);
     }
 
-    /* ===== CARD CONTENT ===== */
-    /* White card container with image and text */
-    .timeline-content {
-      background: white;
-      padding: 0;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      overflow: hidden;
-    }
-
-    /* Card lifts up when hovered */
-    .timeline-content:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-    }
-
-    /* Image at the top of each card */
     .timeline-image {
       width: 100%;
-      height: 100px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .timeline-image img {
+      max-width: 100%;
+      max-height: 100%;
       object-fit: contain;
-      display: block;
-      background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
     }
 
-    /* Text content area inside the card */
-    .timeline-text {
-      padding: 24px 28px;
+    .timeline-content {
+      padding: 24px;
     }
 
-    /* Date label (e.g., "2004 - 2008") */
+    .timeline-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+    }
+
+    .timeline-item:hover::before {
+      width: 20px;
+      height: 20px;
+      background: rgba(168, 213, 255, 1);
+      border-color: #ffffff;
+      box-shadow: 0 0 0 8px rgba(168, 213, 255, 0.3), 0 0 30px rgba(168, 213, 255, 0.6);
+      transform: translateY(-50%) rotate(180deg);
+    }
+
     .timeline-date {
-      color: #667eea;
+      font-size: 13px;
       font-weight: 600;
-      font-size: 14px;
+      color: #667eea;
       margin-bottom: 8px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    /* Card title (e.g., degree name, certification) */
     .timeline-title {
-      font-size: 22px;
-      font-weight: 700;
+      font-size: 19px;
+      font-weight: 600;
       color: #2d3748;
       margin: 0 0 8px 0;
     }
 
-    /* Card description text */
-    .timeline-description {
-      color: #4a5568;
+    .timeline-subtitle {
       font-size: 15px;
+      color: #718096;
+      margin: 0 0 12px 0;
+    }
+
+    .timeline-description {
+      font-size: 14px;
+      color: #4a5568;
       line-height: 1.6;
       margin: 0;
     }
 
-    /* ===== RESPONSIVE DESIGN ===== */
-    /* Tablet and below: Stack timeline columns vertically */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #f0f4ff;
+      color: #667eea;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+
+    .footer-message {
+      text-align: center;
+      margin-top: 60px;
+      padding: 40px 20px;
+    }
+
+    .footer-message p {
+      font-size: 28px;
+      font-weight: 300;
+      color: rgba(255, 255, 255, 0.8);
+      font-style: italic;
+      margin: 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
     @media (max-width: 1024px) {
-      .container {
-        flex-direction: column;
+      .timelines-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
       }
 
-      .timeline-section {
-        width: 100%;
+      .section-title {
+        font-size: 28px;
       }
     }
 
-    /* Mobile devices: Smaller fonts and adjusted spacing */
     @media (max-width: 768px) {
-      .header h1 {
+      .container {
+        padding: 40px 16px;
+      }
+
+      .main-title {
         font-size: 36px;
       }
 
-      .timeline-header h2 {
+      .section-title {
         font-size: 24px;
       }
 
-      .timeline {
-        padding-left: 40px;
-      }
-
-      .timeline-item::before {
-        left: -33px;
+      .timeline-item {
+        padding: 20px;
       }
     }
   </style>
@@ -291,331 +271,355 @@
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
- <body><!-- ===== PAGE HEADER ===== --> <!-- Main title and subtitle banner at the top -->
-  <div class="header">
-   <h1 id="pageTitle">☁️ From Atoms to Algorithms: A Journey Through the Clouds</h1>
-   <div class="subtitle-banner"><span class="banner-text">Cloud Engineer Professional Portfolio</span>
+ <body>
+  <div class="container">
+   <header class="header">
+    <h1 class="main-title" id="mainTitle">My Journey</h1>
+    <p class="header-summary">My journey to becoming a Cloud Engineer involves completing certifications, working on real-world projects, and learning cloud technologies through Microsoft Azure.</p>
+   </header>
+   <div class="timelines-wrapper">
+    <section class="section">
+     <h2 class="section-title" id="schoolTitle">Education</h2>
+     <div class="timeline" id="schoolTimeline"></div>
+    </section>
+    <section class="section">
+     <h2 class="section-title" id="workTitle">Work Experience</h2>
+     <div class="timeline" id="workTimeline"></div>
+    </section>
+    <section class="section">
+     <h2 class="section-title" id="certificatesTitle">Certificates &amp; Achievements</h2>
+     <div class="timeline" id="certificatesTimeline"></div>
+    </section>
    </div>
-  </div><!-- ===== THREE-COLUMN TIMELINE LAYOUT ===== --> <!-- Container holding School, Work, and Certificates timelines -->
-  <div class="container" style="padding-top: 20px;"><!-- School Timeline -->
-   <div class="timeline-section" data-section="school">
-    <div class="timeline-header">
-     <h2 id="schoolTitle">🎓 School</h2>
-    </div>
-    <div class="timeline">
-     <div class="timeline-item" data-year="2008">
-      <div class="timeline-content"><img class="timeline-image" src="https://snhsphotos.blob.core.windows.net/images/Knight Logo.png" alt="Bachelor's Degree" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';" style="background: linear-gradient(135deg, #C8102E50 0%, #00205B50 100%);">
-       <div class="timeline-text">
-        <div class="timeline-date">
-         2004 - 2008
-        </div>
-        <h3 class="timeline-title">Bachelor of Science in Physics and Mathematics</h3>
-        <p class="timeline-description">Houston Christian University - Dual major providing strong foundation in analytical thinking and problem-solving.</p>
-       </div>
-      </div>
-     </div>
-     <div class="timeline-item" data-year="2011">
-      <div class="timeline-content"><img class="timeline-image" src="https://snhsphotos.blob.core.windows.net/images/Knight Logo.png" alt="Master of Education" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';" style="background: linear-gradient(135deg, #C8102E50 0%, #FFFFFF50 100%);">
-       <div class="timeline-text">
-        <div class="timeline-date">
-         2009 - 2011
-        </div>
-        <h3 class="timeline-title">Master of Education</h3>
-        <p class="timeline-description">University of Houston - Advanced degree focusing on educational theory and practice.</p>
-       </div>
-      </div>
-     </div>
-     <div class="timeline-item" data-year="2025">
-      <div class="timeline-content"><img class="timeline-image" src="https://snhsphotos.blob.core.windows.net/images/Knight Logo.png" alt="Master of MIS" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';" style="background: linear-gradient(135deg, #C8102E50 0%, #FFFFFF50 100%);">
-       <div class="timeline-text">
-        <div class="timeline-date">
-         June 2025 - Current
-        </div>
-        <h3 class="timeline-title">Master of Management Information Systems</h3>
-        <p class="timeline-description">Currently pursuing advanced studies in information systems management and technology leadership.</p>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div><!-- Work Projects Timeline -->
-   <div class="timeline-section" data-section="work">
-    <div class="timeline-header">
-     <h2 id="workTitle">💼 Work Experience &amp; Projects</h2>
-    </div>
-    <div class="timeline">
-     <div class="timeline-item" data-year="2010">
-      <div class="timeline-content"><img class="timeline-image" src="https://snhsphotos.blob.core.windows.net/images/Knight Logo.png" alt="Physics Teacher" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';" style="background: linear-gradient(135deg, #14b8a680 0%, #0d948080 100%);">
-       <div class="timeline-text">
-        <div class="timeline-date">
-         August 2010
-        </div>
-        <h3 class="timeline-title">Physics Teacher &amp; Technology Integration Specialist</h3>
-        <p class="timeline-description">Alief Early College High School - Led physics education and integrated technology solutions to enhance learning experiences and classroom efficiency.</p>
-       </div>
-      </div>
-     </div>
-     <div class="timeline-item" data-year="2025"><a href="http://bit.ly/AECHS-SNHS-Website" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block;">
-       <div class="timeline-content"><img class="timeline-image" src="https://snhsphotos.blob.core.windows.net/images/Knight Logo.png" alt="Azure Web App Deployment" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';" style="background: linear-gradient(135deg, #0078D450 0%, #50E6FF50 100%);">
-        <div class="timeline-text">
-         <div class="timeline-date">
-          October 2025
-         </div>
-         <h3 class="timeline-title">Azure Web Apps Deployment 🔗</h3>
-         <p class="timeline-description">Deployed and maintained the Science National Honor Society website using Azure Web Apps with GitHub CI/CD pipelines. Click to visit the SNHS website.</p>
-        </div>
-       </div></a>
-     </div>
-     <div class="timeline-item" data-year="2025">
-      <div class="timeline-content"><img class="timeline-image" src="https://snhsphotos.blob.core.windows.net/images/Knight Logo.png" alt="Azure Web App Timeline Website" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';" style="background: linear-gradient(135deg, #0078D450 0%, #50E6FF50 100%);">
-       <div class="timeline-text">
-        <div class="timeline-date">
-         November 2025
-        </div>
-        <h3 class="timeline-title">Azure Web App Timeline Website</h3>
-        <p class="timeline-description">Created an interactive timeline portfolio website showcasing professional journey, deployed using Azure Web Apps with responsive design and smooth animations.</p>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div><!-- Certificates Timeline -->
-   <div class="timeline-section" data-section="certificates">
-    <div class="timeline-header">
-     <h2 id="certificatesTitle">🏆 Certificates</h2>
-    </div>
-    <div class="timeline">
-     <div class="timeline-item" data-year="2025">
-      <div class="timeline-content"><img class="timeline-image" src="https://snhsphotos.blob.core.windows.net/images/Knight Logo.png" alt="Azure Certification" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';" style="max-height: 100%; width: auto; "background: linear-gradient(135deg, #0078D450 0%, #50E6FF50 100%);">
-       <div class="timeline-text">
-        <div class="timeline-date">
-         July 2025
-        </div>
-        <h3 class="timeline-title">Microsoft Azure Fundamentals AZ-900</h3>
-        <p class="timeline-description">Foundational certification validating knowledge of cloud services and Azure concepts.</p>
-       </div>
-      </div>
-     </div>
-     <div class="timeline-item" data-year="2025">
-      <div class="timeline-content"><img class="timeline-image" src="https://timelineimages.blob.core.windows.net/certificates/network+.png" alt="CompTIA Network+ Certification" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';" style="max-width: 100%; height: auto; "background: linear-gradient(135deg, #E2231A80 0%, #8B000080 100%);">
-       <div class="timeline-text">
-        <div class="timeline-date">
-         September 2025
-        </div>
-        <h3 class="timeline-title">CompTIA Network+</h3>
-        <p class="timeline-description">Industry-standard certification for networking professionals covering network infrastructure and troubleshooting.</p>
-       </div>
-      </div>
-     </div>
-     <div class="timeline-item" data-year="2025">
-      <div class="timeline-content"><img class="timeline-image" src="https://timelineimages.blob.core.windows.net/certificates/Security+.webp" alt="CompTIA Security+ Certification" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';" style="max-width: 100%; height: auto; "background: linear-gradient(135deg, #E2231A80 0%, #8B000080 100%);">
-       <div class="timeline-text">
-        <div class="timeline-date">
-         November 2025
-        </div>
-        <h3 class="timeline-title">CompTIA Security+</h3>
-        <p class="timeline-description">Globally recognized certification validating baseline cybersecurity skills and security best practices.</p>
-       </div>
-      </div>
-     </div>
-     <div class="timeline-item" data-year="2026">
-      <div class="timeline-content"><img class="timeline-image" src="https://timelineimages.blob.core.windows.net/certificates/azure02.jpeg" alt="Azure Administrator Associate Certification" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';" style="max-width: 100%; height: auto; "background: linear-gradient(135deg, #0078D450 0%, #50E6FF50 100%);">
-       <div class="timeline-text">
-        <div class="timeline-date">
-         Expected June 2026
-        </div>
-        <h3 class="timeline-title">Microsoft Azure Administrator Associate AZ-104</h3>
-        <p class="timeline-description">Advanced Azure certification demonstrating expertise in implementing, managing, and monitoring Azure environments.</p>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div>
+   <footer class="footer-message">
+    <p>The journey continues...</p>
+   </footer>
   </div>
-  <footer style="text-align: center; padding: 60px 20px 20px 20px; color: rgba(255,255,255,0.8);">
-   <p style="font-size: 18px; margin: 0; font-weight: 500;">The journey continues...</p>
-  </footer>
   <script>
-    /* ===== CONFIGURATION OBJECT ===== */
-    /* Default values for all customizable properties */
+    // ==================== CONFIGURATION ====================
+    // This section contains all customizable settings for the timeline
     const defaultConfig = {
-      page_title: "Cloud Engineer Professional Portfolio",
-      certificates_title: "🏆 Certificates",
-      school_title: "🎓 School",
-      work_title: "💼 Work Experience & Projects",
-      background_color: "#0f172a",
-      accent_color: "#1e3a8a",
-      card_background: "#ffffff",
-      text_color: "#1e293b",
-      highlight_color: "#0ea5e9",
+      main_title: "From Equations to Cloud Solutions ☁️",
+      school_title: "🎓 Education",
+      work_title: "💼 Work Experience",
+      certificates_title: "🏆 Certificates & Achievements",
+      primary_color: "#2196F3",
+      background_gradient_start: "#1a1a2e",
+      background_gradient_end: "#0f3460",
+      text_color: "#2d3748",
+      accent_color: "#718096",
       font_family: "Inter",
       font_size: 16
     };
 
-    /* ===== CONFIGURATION UPDATE HANDLER ===== */
-    /* Called whenever user changes colors, fonts, or text in Canva editor */
-    async function onConfigChange(config) {
-      /* Update text content from edit panel */
-      const pageTitle = document.getElementById('pageTitle');
-      const certificatesTitle = document.getElementById('certificatesTitle');
-      const schoolTitle = document.getElementById('schoolTitle');
-      const workTitle = document.getElementById('workTitle');
-
-      if (pageTitle) pageTitle.textContent = config.page_title || defaultConfig.page_title;
-      if (certificatesTitle) certificatesTitle.textContent = config.certificates_title || defaultConfig.certificates_title;
-      if (schoolTitle) schoolTitle.textContent = config.school_title || defaultConfig.school_title;
-      if (workTitle) workTitle.textContent = config.work_title || defaultConfig.work_title;
-
-      /* Get color and font values from config */
-      const backgroundColor = config.background_color || defaultConfig.background_color;
-      const accentColor = config.accent_color || defaultConfig.accent_color;
-      const cardBackground = config.card_background || defaultConfig.card_background;
-      const textColor = config.text_color || defaultConfig.text_color;
-      const highlightColor = config.highlight_color || defaultConfig.highlight_color;
-      const fontFamily = config.font_family || defaultConfig.font_family;
-      const baseFontSize = config.font_size || defaultConfig.font_size;
-
-      /* Apply background gradient and font family to page */
-      document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${accentColor} 100%)`;
-      document.body.style.fontFamily = `${fontFamily}, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
-
-      /* Apply card background color to all timeline cards */
-      const timelineContents = document.querySelectorAll('.timeline-content');
-      timelineContents.forEach(content => {
-        content.style.background = cardBackground;
-      });
-
-      /* Update card titles with text color and scaled font size */
-      const timelineTitles = document.querySelectorAll('.timeline-title');
-      timelineTitles.forEach(title => {
-        title.style.color = textColor;
-        title.style.fontSize = `${baseFontSize * 1.375}px`;
-      });
-
-      /* Update description text with scaled font size */
-      const timelineDescriptions = document.querySelectorAll('.timeline-description');
-      timelineDescriptions.forEach(desc => {
-        desc.style.fontSize = `${baseFontSize * 0.9375}px`;
-      });
-
-      /* Apply highlight color to dates and scale font size */
-      const timelineDates = document.querySelectorAll('.timeline-date');
-      timelineDates.forEach(date => {
-        date.style.color = highlightColor;
-        date.style.fontSize = `${baseFontSize * 0.875}px`;
-      });
-
-      const headerTitle = document.querySelector('.header h1');
-      if (headerTitle) {
-        headerTitle.style.fontSize = `${baseFontSize * 3}px`;
+    // ==================== EDUCATION DATA ====================
+    // Add or edit your education entries here
+    // Each entry should have: date, title, subtitle, description, tags, image, imageColor
+    const schoolData = [
+      {
+        date: "August 2004 - July 2008", // Date range or single date
+        title: "Bachelor of Science in Physics and Mathematics", // Main heading
+        subtitle: "Houston Christian University", // Institution or company name
+        description: "Developed strong analytical and problem-solving skills through rigorous coursework in theoretical physics, calculus, differential equations, and linear algebra. Gained expertise in mathematical modeling, computational methods, and scientific research methodologies.", // Full description
+        tags: ["Physics", "Mathematics", "Research"], // Skill tags (optional)
+        image: "https://timelineimages.blob.core.windows.net/certificates/network+.png", // Image URL
+        imageColor: "#00205B" // Background color for image section
+      },
+      {
+        date: "2009 - 2011",
+        title: "Master of Education in Administration and Supervision",
+        subtitle: "University of Houston",
+        description: "Specialized in educational leadership, organizational management, and instructional supervision. Developed skills in strategic planning, curriculum development, and educational policy implementation.",
+        tags: ["Leadership", "Administration", "Education"],
+        image: "https://timelineimages.blob.core.windows.net/certificates/network+.png",
+        imageColor: "#C8102E"
+      },
+      {
+        date: "June 2025 - Current",
+        title: "Master of Management Information Systems",
+        subtitle: "University",
+        description: "Currently pursuing advanced studies in information systems management, bridging technology and business strategy. Focusing on data analytics, enterprise systems, cloud computing, and digital transformation to drive organizational success.",
+        tags: ["Information Systems", "Data Analytics", "Cloud Computing"],
+        image: "https://timelineimages.blob.core.windows.net/certificates/network+.png",
+        imageColor: "#4B2E83"
       }
+    ];
 
-      const sectionHeaders = document.querySelectorAll('.timeline-header h2');
-      sectionHeaders.forEach(header => {
-        header.style.fontSize = `${baseFontSize * 2.25}px`;
-      });
+    // ==================== WORK EXPERIENCE DATA ====================
+    // Add or edit your work experience entries here
+    // Use 'link' property to make an item clickable (opens in new tab)
+    const workData = [
+      {
+        date: "August 2010",
+        title: "Physics Teacher & Technology Integration Specialist",
+        subtitle: "School District",
+        description: "Led physics instruction and pioneered technology integration initiatives. Applied analytical thinking and problem-solving skills to create engaging learning experiences and implement innovative educational technology solutions.",
+        tags: ["Physics Education", "Technology Integration", "STEM"],
+        image: "https://timelineimages.blob.core.windows.net/certificates/azure02.jpeg",
+        imageColor: "#0078D4"
+      },
+      {
+        date: "October 2025",
+        title: "Azure Web Apps Deployment 🔗",
+        subtitle: "Science National Honor Society Website",
+        description: "Deployed and maintained the Science National Honor Society website using Azure Web Apps with GitHub CI/CD pipelines. Click to visit the SNHS website.",
+        tags: ["Azure", "CI/CD", "Web Development"],
+        link: "https://lively-ocean-060f9540f.2.azurestaticapps.net/", // Optional: Makes card clickable, opens URL in new tab
+        image: "https://timelineimages.blob.core.windows.net/certificates/azure02.jpeg",
+        imageColor: "#0078D4"
+      },
+      {
+        date: "November 2025",
+        title: "Azure Web App Timeline Website",
+        subtitle: "Interactive Portfolio Project",
+        description: "Developed and deployed an interactive timeline website showcasing professional journey and cloud engineering skills. Built with responsive design and hosted on Azure Web Apps.",
+        tags: ["Azure", "Web Development", "Portfolio"],
+        image: "https://timelineimages.blob.core.windows.net/certificates/azure02.jpeg",
+        imageColor: "#0078D4"
+      }
+    ];
 
-      const timelineItems = document.querySelectorAll('.timeline-item');
-      timelineItems.forEach(item => {
-        const before = window.getComputedStyle(item, '::before');
-        item.style.setProperty('--dot-border-color', highlightColor);
-      });
+    // ==================== CERTIFICATES & ACHIEVEMENTS DATA ====================
+    // Add or edit your certifications and achievements here
+    const certificatesData = [
+      {
+        date: "July 2025",
+        title: "Microsoft Azure Fundamentals AZ-900",
+        subtitle: "Microsoft",
+        description: "Foundational certification demonstrating understanding of cloud concepts, core Azure services, security, privacy, compliance, and Azure pricing and support.",
+        tags: ["Azure", "Cloud Fundamentals"],
+        image: "https://timelineimages.blob.core.windows.net/certificates/azure01.jpg",
+        imageColor: "#0078D4"
+      },
+      {
+        date: "September 2025",
+        title: "CompTIA Network+",
+        subtitle: "CompTIA",
+        description: "Industry-standard certification validating essential networking skills including network configuration, management, troubleshooting, and security fundamentals.",
+        tags: ["Networking", "Infrastructure"],
+        image: "https://timelineimages.blob.core.windows.net/certificates/network+.png",
+        imageColor: "#E4002B"
+      },
+      {
+        date: "November 2025",
+        title: "CompTIA Security+",
+        subtitle: "CompTIA",
+        description: "Globally recognized certification covering cybersecurity fundamentals, threat management, risk mitigation, and security operations best practices.",
+        tags: ["Security", "Cybersecurity"],
+        image: "https://timelineimages.blob.core.windows.net/certificates/Security+.webp",
+        imageColor: "#E4002B"
+      },
+      {
+        date: "Expected June 2026",
+        title: "Microsoft Azure Administrator Associate AZ-104",
+        subtitle: "Microsoft",
+        description: "Advanced Azure certification demonstrating expertise in implementing, managing, and monitoring Azure environments including compute, storage, and networking resources.",
+        tags: ["Azure", "Cloud Administration"],
+        image: "https://timelineimages.blob.core.windows.net/certificates/azure02.jpeg",
+        imageColor: "#0078D4"
+      }
+    ];
 
-      /* Update timeline dot border color dynamically */
-      const style = document.createElement('style');
-      style.textContent = `
-        .timeline-item::before {
-          border-color: ${highlightColor} !important;
+    // ==================== RENDERING FUNCTIONS ====================
+    // This function creates the timeline cards from your data
+    // You typically don't need to edit this unless changing the card layout
+    function renderTimeline(containerId, data) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      
+      data.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = item.image ? 'timeline-item has-image' : 'timeline-item';
+        itemDiv.id = `${containerId}-item-${index}`;
+        
+        let tagsHtml = '';
+        if (item.tags && item.tags.length > 0) {
+          tagsHtml = item.tags.map(tag => `<span class="badge">${tag}</span>`).join('');
         }
-      `;
-      document.head.appendChild(style);
+        
+        let imageHtml = '';
+        if (item.image) {
+          const bgColor = item.imageColor || '#f0f4ff';
+          imageHtml = `
+            <div class="timeline-image" style="background-color: ${bgColor};">
+              <img src="${item.image}" alt="${item.title}" onerror="this.src=''; this.alt='Image failed to load'; this.parentElement.style.display='none';">
+            </div>
+          `;
+        }
+        
+        itemDiv.innerHTML = `
+          ${imageHtml}
+          <div class="timeline-content">
+            <div class="timeline-date">${item.date}</div>
+            <h3 class="timeline-title">${item.title}</h3>
+            <p class="timeline-subtitle">${item.subtitle}</p>
+            <p class="timeline-description">${item.description}</p>
+            ${tagsHtml}
+          </div>
+        `;
+        
+        if (item.link) {
+          itemDiv.style.cursor = 'pointer';
+          itemDiv.addEventListener('click', () => {
+            window.open(item.link, '_blank', 'noopener,noreferrer');
+          });
+        }
+        
+        container.appendChild(itemDiv);
+      });
     }
 
-    /* ===== CANVA EDITOR CAPABILITIES ===== */
-    /* Defines which colors, fonts can be customized in Canva editor */
+    // ==================== CONFIGURATION CHANGE HANDLER ====================
+    // This function updates the visual appearance when config changes
+    // Handles fonts, colors, and text content updates
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Arial, sans-serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+      
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const mainTitle = document.getElementById('mainTitle');
+      mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      mainTitle.style.fontSize = `${baseSize * 3}px`;
+      mainTitle.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const schoolTitle = document.getElementById('schoolTitle');
+      schoolTitle.textContent = config.school_title || defaultConfig.school_title;
+      schoolTitle.style.fontSize = `${baseSize * 2}px`;
+      schoolTitle.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const workTitle = document.getElementById('workTitle');
+      workTitle.textContent = config.work_title || defaultConfig.work_title;
+      workTitle.style.fontSize = `${baseSize * 2}px`;
+      workTitle.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const certificatesTitle = document.getElementById('certificatesTitle');
+      certificatesTitle.textContent = config.certificates_title || defaultConfig.certificates_title;
+      certificatesTitle.style.fontSize = `${baseSize * 2}px`;
+      certificatesTitle.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const bgGradientStart = config.background_gradient_start || defaultConfig.background_gradient_start;
+      const bgGradientEnd = config.background_gradient_end || defaultConfig.background_gradient_end;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      
+      document.body.style.background = `linear-gradient(135deg, ${bgGradientStart} 0%, ${bgGradientEnd} 100%)`;
+      
+      document.querySelectorAll('.section-title').forEach(el => {
+        el.style.color = '#ffffff';
+        el.style.fontSize = `${baseSize * 1.5}px`;
+        el.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      });
+      
+      document.querySelectorAll('.timeline-date').forEach(el => {
+        el.style.color = primaryColor;
+        el.style.fontSize = `${baseSize * 0.875}px`;
+      });
+      
+      document.querySelectorAll('.timeline-title').forEach(el => {
+        el.style.color = textColor;
+        el.style.fontSize = `${baseSize * 1.25}px`;
+        el.style.fontFamily = `${customFont}, ${baseFontStack}`;
+      });
+      
+      document.querySelectorAll('.timeline-subtitle').forEach(el => {
+        el.style.color = accentColor;
+        el.style.fontSize = `${baseSize}px`;
+      });
+      
+      document.querySelectorAll('.timeline-description').forEach(el => {
+        el.style.fontSize = `${baseSize * 0.9375}px`;
+      });
+      
+      document.querySelectorAll('.badge').forEach(el => {
+        el.style.color = primaryColor;
+        el.style.fontSize = `${baseSize * 0.8125}px`;
+      });
+      
+
+    }
+
+    // ==================== CANVA EDITING CAPABILITIES ====================
+    // This enables color and font editing through Canva's interface
+    // Don't modify this unless you understand the SDK
     function mapToCapabilities(config) {
       return {
-        /* Five customizable colors for Canva color picker */
         recolorables: [
-          /* Background gradient color (dark blue) */
           {
-            get: () => config.background_color || defaultConfig.background_color,
+            get: () => config.background_gradient_start || defaultConfig.background_gradient_start,
             set: (value) => {
-              if (window.elementSdk) {
-                window.elementSdk.setConfig({ background_color: value });
-              }
+              config.background_gradient_start = value;
+              window.elementSdk.setConfig({ background_gradient_start: value });
             }
           },
-          /* Accent gradient color (lighter blue) */
           {
-            get: () => config.accent_color || defaultConfig.accent_color,
+            get: () => config.background_gradient_end || defaultConfig.background_gradient_end,
             set: (value) => {
-              if (window.elementSdk) {
-                window.elementSdk.setConfig({ accent_color: value });
-              }
+              config.background_gradient_end = value;
+              window.elementSdk.setConfig({ background_gradient_end: value });
             }
           },
-          /* Card background color (white) */
-          {
-            get: () => config.card_background || defaultConfig.card_background,
-            set: (value) => {
-              if (window.elementSdk) {
-                window.elementSdk.setConfig({ card_background: value });
-              }
-            }
-          },
-          /* Card text color (dark gray) */
           {
             get: () => config.text_color || defaultConfig.text_color,
             set: (value) => {
-              if (window.elementSdk) {
-                window.elementSdk.setConfig({ text_color: value });
-              }
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
             }
           },
-          /* Highlight color for dates and dots (light blue) */
           {
-            get: () => config.highlight_color || defaultConfig.highlight_color,
+            get: () => config.primary_color || defaultConfig.primary_color,
             set: (value) => {
-              if (window.elementSdk) {
-                window.elementSdk.setConfig({ highlight_color: value });
-              }
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
             }
           }
         ],
         borderables: [],
-        /* Font family customization for Canva font picker */
         fontEditable: {
           get: () => config.font_family || defaultConfig.font_family,
           set: (value) => {
-            if (window.elementSdk) {
-              window.elementSdk.setConfig({ font_family: value });
-            }
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
           }
         },
-        /* Base font size that scales all text proportionally */
         fontSizeable: {
           get: () => config.font_size || defaultConfig.font_size,
           set: (value) => {
-            if (window.elementSdk) {
-              window.elementSdk.setConfig({ font_size: value });
-            }
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
           }
         }
       };
     }
 
-    /* ===== EDIT PANEL VALUES ===== */
-    /* Maps text fields to Canva edit panel controls */
+    // ==================== EDIT PANEL MAPPING ====================
+    // Maps config values to Canva's edit panel
+    // Add entries here if you add new editable text fields
     function mapToEditPanelValues(config) {
       return new Map([
-        ["page_title", config.page_title || defaultConfig.page_title],
-        ["certificates_title", config.certificates_title || defaultConfig.certificates_title],
+        ["main_title", config.main_title || defaultConfig.main_title],
         ["school_title", config.school_title || defaultConfig.school_title],
-        ["work_title", config.work_title || defaultConfig.work_title]
+        ["work_title", config.work_title || defaultConfig.work_title],
+        ["certificates_title", config.certificates_title || defaultConfig.certificates_title]
       ]);
     }
 
-    /* ===== INITIALIZE CANVA SDK ===== */
-    /* Connect the configuration to Canva's editing interface */
+    // ==================== INITIALIZATION ====================
+    // Render all three timelines on page load
+    renderTimeline('schoolTimeline', schoolData);
+    renderTimeline('workTimeline', workData);
+    renderTimeline('certificatesTimeline', certificatesData);
+
+    // Initialize Canva's Element SDK for editing capabilities
     if (window.elementSdk) {
       window.elementSdk.init({
         defaultConfig,
@@ -624,38 +628,6 @@
         mapToEditPanelValues
       });
     }
-
-    /* ===== SCROLL ANIMATIONS ===== */
-    /* Intersection Observer watches for elements entering viewport */
-    const observerOptions = {
-      threshold: 0.15, // Trigger when 15% of element is visible
-      rootMargin: '0px 0px -50px 0px' // Start animation slightly before reaching viewport
-    };
-
-    /* Create observer that adds 'visible' class to trigger animations */
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible'); // Trigger fade-in animation
-        }
-      });
-    }, observerOptions);
-
-    /* Watch all three timeline sections (School, Work, Certificates) */
-    document.querySelectorAll('.timeline-section').forEach(section => {
-      observer.observe(section);
-    });
-
-    /* Apply consistent spacing between all timeline cards */
-    document.querySelectorAll('.timeline-item').forEach(item => {
-      item.style.marginBottom = '50px';
-    });
-
-    /* Watch individual cards and stagger their animations */
-    document.querySelectorAll('.timeline-item').forEach((item, index) => {
-      item.style.transitionDelay = `${index * 0.1}s`; // Each card animates 0.1s after previous
-      observer.observe(item);
-    });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a2e0ee3221cf0a1',t:'MTc2Mzg3MzU1Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a367e3f8759f2a2',t:'MTc2Mzk2MjAwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
